@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block header %}
+    <h1 class="main-header">{{title}}</h1>
+{% endblock header %}
+{% block content %}
+    <ul>
+        {% for user in users %}
+            <li>{{user}}</li>
+        {% endfor %}
+    </ul>
+    <a href="{{ url_for('add_new_user')}}"><button>Add User</button></a>
+{% endblock content %}
