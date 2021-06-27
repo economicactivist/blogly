@@ -27,7 +27,10 @@
    color: #bee2e8;
 }
 
-
+.flashes{
+   background-color: rgb(235, 176, 176);
+   color: red;
+}
 .user-wrapper{
    display: flex;
 }
