@@ -1,0 +1,17 @@
+
+{% extends 'base.html' %}
+{% block header %}
+    
+{% endblock header %}
+{% block content %}
+  <div class="user-wrapper">
+      <!-- add image source -->
+      <div class="user-img"><img src="" alt=""></div>
+      <div class="name-and-buttons">
+          <!-- add name variable -->
+        <h1 class="main-header">{{name}}</h1> 
+        <a href="{{url_for('edit_user')}}"><button class="blue-submit">Edit</button></a>
+        <a href="{{url_for('delete_user')}}"><button class="red-submit">Delete</button></a>
+      </div>
+  </div>
+{% endblock content %}

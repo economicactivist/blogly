@@ -1,0 +1,28 @@
+.main-header{
+   font-size: 20px; 
+}
+
+.gray-submit {
+   background-color: #6c757d;
+   color: white;
+}
+
+.green-submit {
+   background-color: rgb(40,167,69);
+   color: white;
+}
+
+.blue-submit{
+   background-color: rgb(0,124,254);
+   color: white;
+}
+
+.red-submit{
+   background-color: rgb(220,52,68);
+   color: white;
+}
+
+
+.user-wrapper{
+   display: flex;
+}
