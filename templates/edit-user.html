@@ -1,16 +1,16 @@
-
 {% extends 'base.html' %}
 {% block header %}
     <h1 class="main-header">{{title}}</h1>
 {% endblock header %}
 {% block content %}
-    <form action="/users/new" method="post">
+    <form method="post">
         <label for="fname">First Name</label>
         <input id="fname" type="text" name="first_name" placeholder="Enter first name">
         <label for="lname">Last Name</label>
         <input id="lname" type="text" name="last_name" placeholder="Enter last name">
         <label for="imgurl">Image URL</label>
         <input id="imgurl" type="text" name="img_url" placeholder="Provide an image of this user">
-    <button type="submit" class="green-submit">Add User</button>
+    <button type="submit" formaction="/users/{{user_id}}/edit" class="green-submit">Save</button>
+    <button type="submit" formaction="/users/{{user_id}}" class="green-submit">Cancel</button>
     </form>
 {% endblock content %}

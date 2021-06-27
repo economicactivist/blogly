@@ -22,7 +22,13 @@
    color: white;
 }
 
+.cancel-submit{
+   background-color: white;
+   color: #bee2e8;
+}
+
 
 .user-wrapper{
    display: flex;
 }
+

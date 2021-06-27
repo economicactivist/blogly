@@ -5,7 +5,7 @@
 {% block content %}
     <ul>
         {% for user in users %}
-            <li>{{user}}</li>
+            <li><a href="{{ url_for('show_user_detail')}}">{{user}}</a></li>
         {% endfor %}
     </ul>
     <a href="{{ url_for('add_new_user')}}"><button class="gray-submit">Add User</button></a>
