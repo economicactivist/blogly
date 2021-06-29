@@ -10,6 +10,8 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///blogly'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_ECHO'] = True
 app.config['SECRET_KEY'] = "KJOJKLJKJLKJL"
+app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
+app.debug=True
 
 debug = DebugToolbarExtension(app)
 
@@ -27,11 +29,11 @@ def list_users():
     users = User.query.all()
     return render_template('user-list.html', users=users)
 
-@app.route('users/new')
+@app.route('/users/new')
 def add_new_user():
     return render_template('new-user.html')
 
-@app.route('users/new', methods=['POST'])
+@app.route('/users/new', methods=['POST'])
 def add_new_user_to_db():
     first_name = request.form["first_name"]
     last_name = request.form["last_name"]
