@@ -18,3 +18,6 @@ class User(db.Model):
 
     def __repr__(self) -> str:
         return f"User('{self.first_name}','{self.last_name}', '{self.image_url}')"
+    
+    def fullname(self):
+        return f'{self.first_name} {self.last_name}'
