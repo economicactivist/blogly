@@ -37,7 +37,7 @@ def add_new_user():
 def add_new_user_to_db():
     first_name = request.form["first_name"]
     last_name = request.form["last_name"]
-    image_url = request.form["img_url"]
+    image_url = request.form["img_url"] or None
 
     new_user = User(first_name=first_name, last_name=last_name, image_url=image_url)
     db.session.add(new_user)
@@ -54,6 +54,7 @@ def show_user_detail(user_id):
 @app.route('/users/<int:user_id>/edit')
 def edit_user(user_id):
     #maybe I should just pass user here
+    
     user = User.query.get_or_404(user_id)
     return render_template('edit-user.html', user=user)
 
