@@ -74,5 +74,7 @@ def delete_user(user_id):
     User.query.filter_by(id=user_id).delete()
     return redirect(url_for('list_users'))
 
+    #comment to update commit
+
 
  
