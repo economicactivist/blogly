@@ -41,20 +41,21 @@ def add_new_user_to_db():
 
     new_user = User(first_name=first_name, last_name=last_name, image_url=image_url)
     db.session.add(new_user)
-    db.session.commit(new_user)
+    db.session.commit()
     #####################
     return redirect(url_for('list_users'))
 
 @app.route('/users/<int:user_id>')
 def show_user_detail(user_id):
     user = User.query.get_or_404(user_id)
-    return render_template(url_for('user-detail.html', user=user))
+    print(user.image_url)
+    return render_template('user-detail.html', user=user)
 
 @app.route('/users/<int:user_id>/edit')
-def edit_user(user):
+def edit_user(user_id):
     #maybe I should just pass user here
-   
-    return render_template(url_for('edit-user.html', user=user))
+    user = User.query.get_or_404(user_id)
+    return render_template('edit-user.html', user=user)
 
 @app.route('/users/<int:user_id>/edit', methods=['POST'])
 def post_user_edits_to_db(user_id):
@@ -63,7 +64,7 @@ def post_user_edits_to_db(user_id):
     user.last_name = request.form["last_name"]
     user.image_url = request.form["img_url"]
     db.session.add(user)
-    db.session.commit(user)
+    db.session.commit()
     return redirect(url_for('list_users'))
 
 @app.route('/users/<int:user_id>/delete')
