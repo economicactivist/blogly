@@ -96,5 +96,22 @@ def post_new_blog_post_to_db(user_id):
     #! Needs to be changed to post_id
     #comment to update commit
 
+@app.route('/posts/<int:post_id>')
+def show_post(post_id):
+    post = Post.query.get_or_404(post_id)
+    return render_template('post-detail.html', post=post)
+
+@app.route('path')
+def edit_post(foo):
+    return render_template('expression')
+
+@app.route('path')
+def delete_post(post_id):
+    flash('Post Deleted')
+    post_id = int(post_id)
+    post = Post.query.get_or_404(post_id)
+    Post.query.filter_by(id=post_id).delete()
+    return redirect(url_for('show_user_detail', user_id = post.user.id))
+
 
  

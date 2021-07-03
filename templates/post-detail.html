@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block header %}
+  <h1 class="main-header">{{post.title}}</h1>
+{% endblock header %}
+{% block content %}
+    {post.content}
+    <p><em>By&nbsp {post.user.first_name}&nbsp{post.user.last_name}</em></p>
+      <a href="{{url_for('show_user_detail', user_id=post.user.id)}}"><button class="cancel-submit">Cancel</button></a>
+      <a href="{{ url_for('edit_post')}}"><button class="blue-submit">Edit</button></a>
+      <a href="{{url_for('delete_post', post_id=post.id)}}"><button class="red-submit">Delete</button></a>
+  
+{% endblock content %}

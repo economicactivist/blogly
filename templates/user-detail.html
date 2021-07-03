@@ -9,15 +9,16 @@
       <div class="user-img"><img src="{{user.image_url}}" alt="image of user"></div>
       <div class="name-and-buttons">
           <!-- add name variable -->
-        <h1 class="main-header">{{user.first_name}}{{user.last_name}}</h1> 
+      
         <a href="/users/{{user.id}}/edit"><button class="blue-submit">Edit</button></a>
         <a href="/users/{{user.id}}/delete"><button class="red-submit">Delete</button></a>
       </div>
       <h1 class="sub-header">Posts</h1>
       <ul>
       {% for post in posts %}
-        <a href="{{ url_for('create_post')}}"><li>{{post.title}}</li></a>
+        <a href="{{ url_for('show_post')}}"><li>{{post.title}}</li></a>
       {% endfor %}
       </ul>
+      <a href="{{ url_for('create_post')}}">Add Post<button class="blue-submit"></button></a>
   </div>
 {% endblock content %}
