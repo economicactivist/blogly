@@ -4,6 +4,13 @@
   <h1 class="main-header">{{user.first_name}}&nbsp{{user.last_name}}</h1>
 {% endblock header %}
 {% block content %}
+  {% with messages = get_flashed_messages() %}
+  {% if messages %}
+      {% for message in messages %}
+          <div class="flashes">{{ message }}</div>
+      {% endfor %}
+  {% endif %}
+  {% endwith %}
   <div class="user-wrapper">
       <!-- add image source -->
       <div class="user-img"><img src="{{user.image_url}}" alt="image of user"></div>
@@ -16,9 +23,9 @@
       <h1 class="sub-header">Posts</h1>
       <ul>
       {% for post in posts %}
-        <a href="{{ url_for('show_post')}}"><li>{{post.title}}</li></a>
+        <a href="{{ url_for('show_post', post_id=post.id)}}"><li>{{post.title}}</li></a>
       {% endfor %}
       </ul>
-      <a href="{{ url_for('create_post')}}">Add Post<button class="blue-submit"></button></a>
+      <a href="{{ url_for('create_post', user_id=user.id)}}"><button class="blue-submit">Add Post</button></a>
   </div>
 {% endblock content %}

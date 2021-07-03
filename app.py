@@ -48,8 +48,9 @@ def add_new_user_to_db():
 @app.route('/users/<int:user_id>')
 def show_user_detail(user_id):
     user = User.query.get_or_404(user_id)
+    posts = Post.query.filter_by(user_id=user_id)
     print(user.image_url)
-    return render_template('user-detail.html', user=user)
+    return render_template('user-detail.html', user=user, posts=posts)
 
 @app.route('/users/<int:user_id>/edit')
 def edit_user(user_id):
@@ -101,17 +102,28 @@ def show_post(post_id):
     post = Post.query.get_or_404(post_id)
     return render_template('post-detail.html', post=post)
 
-@app.route('path')
-def edit_post(foo):
-    return render_template('expression')
+@app.route('/posts/<int:post_id>/edit')
+def edit_post(post_id):
+    post = Post.query.get_or_404(post_id)
+    return render_template('edit-post.html', post=post)
 
-@app.route('path')
+@app.route('/posts/<int:post_id>/edit', methods=['POST'])
+def post_blog_post_edits_to_db(post_id):
+    post = Post.query.get_or_404(post_id)
+    post.title = request.form["post_title"]
+    post.content = request.form["post_content"]
+    db.session.add(post)
+    db.session.commit()
+    return redirect(url_for('show_post', post_id=post.id))
+
+@app.route('/posts/<int:post_id>/delete')
 def delete_post(post_id):
     flash('Post Deleted')
     post_id = int(post_id)
     post = Post.query.get_or_404(post_id)
     Post.query.filter_by(id=post_id).delete()
     return redirect(url_for('show_user_detail', user_id = post.user.id))
+
 
 
  
