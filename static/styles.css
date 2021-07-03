@@ -1,6 +1,9 @@
 .main-header{
    font-size: 20px; 
 }
+.sub-header{
+   font-size: 18px; 
+}
 
 .gray-submit {
    background-color: #6c757d;
@@ -31,8 +34,9 @@
    background-color: rgb(235, 176, 176);
    color: red;
 }
-.user-wrapper{
+.content{
    display: flex;
+   flex-direction: column;
 }
 
 .user-img{

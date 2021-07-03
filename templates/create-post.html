@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block header %}
+    <h1 class="main-header">Add post for:&nbsp {{user.first_name}}&nbsp{{user.last_name}}</h1>
+{% endblock header %}
+{% block content %}
+    <form method="post">
+        <label for="post_title">Title</label>
+        <input id="post_title" type="text" name="post_title">
+        <br>
+        <label for="post_content">Content</label>
+        <textarea id="post_content" name="post_content" rows="4" cols="50"></textarea>
+        <button type="submit" formaction="{{url_for('post_new_blog_post_to_db', user_id=user.id)}}" class="green-submit">Add</button>
+    <a href="{{url_for('show_user_detail', user_id=user.id)}}"><button class="cancel-submit">Cancel</button></a>
+    </form>
+{% endblock content %}

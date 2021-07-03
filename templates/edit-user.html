@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block header %}
-    <h1 class="main-header">{{title}}</h1>
+    <h1 class="main-header">Edit user info for:&nbsp {{user.first_name}}&nbsp{{user.last_name}}</h1>
 {% endblock header %}
 {% block content %}
     <form method="post">
@@ -10,7 +10,7 @@
         <input id="lname" type="text" name="last_name" value={{user.last_name}} placeholder="Enter last name">
         <label for="imgurl">Image URL</label>
         <input id="imgurl" type="text" name="img_url" value={{user.image_url}} placeholder="Provide an image of this user">
-    <button type="submit" formaction="{{url_for('post_user_edits_to_db', user_id=user.id)}}" class="green-submit">Save</button>
-    <button type="submit" formaction="{{url_for('show_user_detail', user_id=user_id)}}" class="cancel-submit">Cancel</button>
+        <button type="submit" formaction="{{url_for('post_user_edits_to_db', user_id=user.id)}}" class="green-submit">Save</button>
+    <a href="{{url_for('show_user_detail', user_id=user.id)}}"><button class="cancel-submit">Cancel</button></a>
     </form>
 {% endblock content %}

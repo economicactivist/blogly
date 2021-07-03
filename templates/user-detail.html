@@ -1,7 +1,7 @@
 
 {% extends 'base.html' %}
 {% block header %}
-    
+  <h1 class="main-header">{{user.first_name}}&nbsp{{user.last_name}}</h1>
 {% endblock header %}
 {% block content %}
   <div class="user-wrapper">
@@ -13,5 +13,11 @@
         <a href="/users/{{user.id}}/edit"><button class="blue-submit">Edit</button></a>
         <a href="/users/{{user.id}}/delete"><button class="red-submit">Delete</button></a>
       </div>
+      <h1 class="sub-header">Posts</h1>
+      <ul>
+      {% for post in posts %}
+        <a href="{{ url_for('create_post')}}"><li>{{post.title}}</li></a>
+      {% endfor %}
+      </ul>
   </div>
 {% endblock content %}

@@ -3,7 +3,7 @@
 from flask import Flask, request, render_template, redirect, flash, session, url_for
 from flask.helpers import url_for
 from flask_debugtoolbar import DebugToolbarExtension
-from models import db, db_connect, User
+from models import db, db_connect, User, Post
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///blogly'
@@ -54,7 +54,7 @@ def show_user_detail(user_id):
 @app.route('/users/<int:user_id>/edit')
 def edit_user(user_id):
     #maybe I should just pass user here
-    
+
     user = User.query.get_or_404(user_id)
     return render_template('edit-user.html', user=user)
 
@@ -75,6 +75,25 @@ def delete_user(user_id):
     User.query.filter_by(id=user_id).delete()
     return redirect(url_for('list_users'))
 
+@app.route('/users/<int:user_id>/posts/new')
+def create_post(user_id):
+    user = User.query.get_or_404(user_id)
+    return render_template('create-post.html', user=user)
+
+@app.route('/users/<int:user_id>/posts/new', methods=['POST'])
+def post_new_blog_post_to_db(user_id):
+    #!is this line necesary?
+    user = User.query.get_or_404(user_id)
+   
+    post_title = request.form["post_title"]
+    post_content = request.form["post_content"]
+    new_post = Post(title=post_title, content=post_content, user_id=user.id)
+
+    db.session.add(new_post)
+    db.session.commit()
+    return redirect(url_for('show_user_detail', user_id = user.id))
+    #! why can't i just pass user_id directly?
+    #! Needs to be changed to post_id
     #comment to update commit
 
 
