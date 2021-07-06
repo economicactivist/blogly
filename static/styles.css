@@ -47,3 +47,15 @@
    max-width: 300px;
    max-height: 300px;
 }
+
+.tags-wrapper{
+   display: flex;
+}
+
+.tag{
+   background-color: rgb(0,124,254);
+   color: white;
+   padding: 2px 4px;
+   font-size: 10px;
+}
+

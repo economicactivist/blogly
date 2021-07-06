@@ -20,6 +20,7 @@ db.drop_all()
 db.create_all()
 
 
+
 @app.route('/')
 def redirect_to_user_list():
     return redirect(url_for('list_users'))
@@ -122,8 +123,38 @@ def delete_post(post_id):
     post_id = int(post_id)
     post = Post.query.get_or_404(post_id)
     Post.query.filter_by(id=post_id).delete()
+    db.session.commit()
     return redirect(url_for('show_user_detail', user_id = post.user.id))
 
+@app.route('/tags')
+def list_tags():
+    return render_template('tags.html')
 
+@app.route('/tags/<int:tag_id>')
+def show_tag_detail(tag_id):
+    return render_template('tag-detail.html')
 
+@app.route('/tags/new')
+def create_tag():
+    return render_template('create-tag.html')
+
+@app.route('/tags/new', methods=['POST'])
+def create_tag():
+    return redirect(url_for('list_tags'))
+
+@app.route('tags/<int:tag_id>/edit')
+def edit_tag(tag_id):
+    return render_template('edit-tag.html')
+
+@app.route('tags/<int:tag_id>/edit', methods=['POST'])
+def edit_tag(tag_id):
+    return redirect(url_for('list_tags'))
+
+@app.route('/tags/<int:tag_id>/delete')
+def delete_tag(tag_id):
+    flash('Tag Deleted')
+    #! add message to html
+    # Tag.query.filter_by(id=tag_id).delete()
+    db.session.commit()
+    return redirect(url_for('list_tags'))
  

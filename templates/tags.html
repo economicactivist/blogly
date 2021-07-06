@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block header %}
+    <h1 class="main-header">Tags</h1>
+{% endblock header %}
+{% block content %}
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+                <div class="flashes">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+    <ul>
+            {% for tag in tags %}
+                {% with tag_id = tag.id %} 
+                    <li><a href="{{ url_for('show_tag_detail', tag_id=tag_id)}}">{{tag.name}}</a></li>
+                {% endwith %}
+            {% endfor %}
+    </ul>
+    <a href="{{ url_for('create_tag')}}"><button class="blue-submit">Add Tag</button></a>
+{% endblock content %}

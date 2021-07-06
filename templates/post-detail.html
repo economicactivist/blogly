@@ -4,7 +4,13 @@
 {% endblock header %}
 {% block content %}
     {{post.content}}
-    <p><em>By {{post.user.first_name}} {{post.user.last_name}}</em></p>
+    <p><em>By {{post.user.first_name}} {{post.user.last_name}} on {{post.user.created_at}}</em></p>
+    <div class="tags-wrapper">
+      {% for tag in tags  %}
+      <!-- need to link tag buttons -->
+         <div><a href="{{url_for('show_tag_detail', tag_id=tag.id)}}"><button class="tag">{tag.name}</button></a></div>
+      {% endfor %}
+    </div>
       <a href="{{url_for('show_user_detail', user_id=post.user.id)}}"><button class="cancel-submit">Cancel</button></a>
       <a href="{{ url_for('edit_post', post_id=post.id)}}"><button class="blue-submit">Edit</button></a>
       <a href="{{url_for('delete_post', post_id=post.id)}}"><button class="red-submit">Delete</button></a>
