@@ -3,7 +3,7 @@
 from flask import Flask, request, render_template, redirect, flash, session, url_for
 from flask.helpers import url_for
 from flask_debugtoolbar import DebugToolbarExtension
-from models import db, db_connect, User, Post
+from models import db, db_connect, User, Post, Tag, PostTag
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///blogly'
@@ -128,23 +128,46 @@ def delete_post(post_id):
 
 @app.route('/tags')
 def list_tags():
-    return render_template('tags.html')
+    tags = Tag.query.all()
+    return render_template('tags.html', tags=tags)
 
 @app.route('/tags/<int:tag_id>')
 def show_tag_detail(tag_id):
-    return render_template('tag-detail.html')
+    tag = Tag.query.get_or_404(tag_id)
+    
+    # all posts matching a certain tag
+    tag_name = Tag.query.get_or_404(tag.name)
+
+   
+    #get tag name for corresponding tag id
+    tagged_posts = Post.created_tags
+    print(tag_name)
+    post_ids = []
+    # expect something like: "fun"
+    print(tagged_posts)  
+    # expect something like: [<PostTag 1, fun>, <PostTag 3, fun>]
+    
+    for item in tagged_posts:
+        items = item.split()
+        #expect ["<PostTag", "1,", "fun>"]
+        post_id = items[1]
+        if items[2][:-1] == tag_name:  #"fun>" becomes "fun"
+            post_ids.append(int(post_id))
+        #expect someting like post_ids = [1,3]
+    return render_template('tag-detail.html', tag_name=tag_name, post_ids=post_ids)
 
 @app.route('/tags/new')
 def create_tag():
     return render_template('create-tag.html')
 
 @app.route('/tags/new', methods=['POST'])
-def create_tag():
+def add_tag_to_db():
     return redirect(url_for('list_tags'))
 
 @app.route('tags/<int:tag_id>/edit')
 def edit_tag(tag_id):
-    return render_template('edit-tag.html')
+    tag = Tag.query.get_or_404(tag_id)
+    return render_template('edit-tag.html', tag=tag)
 
 @app.route('tags/<int:tag_id>/edit', methods=['POST'])
 def edit_tag(tag_id):
@@ -154,7 +177,7 @@ def edit_tag(tag_id):
 def delete_tag(tag_id):
     flash('Tag Deleted')
     #! add message to html
-    # Tag.query.filter_by(id=tag_id).delete()
+    Tag.query.filter_by(id=tag_id).delete()
     db.session.commit()
     return redirect(url_for('list_tags'))
  
