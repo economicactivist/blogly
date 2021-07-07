@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block header %}
+  <h1 class="main-header">{{tag.name}}</h1>
+{% endblock header %}
+{% block content %}
+    <ul>
+      {% for related_post in related_posts  %}
+      <!-- need to link tag buttons -->
+         <li><a href="{{ url_for('show_post', post_id=related_post.id)}}">{{related_post.title}}</a></li>
+      {% endfor %}
+    </ul>
+
+      <a href="{{ url_for('edit_tag', tag_id=tag.id)}}"><button class="blue-submit">Edit</button></a>
+      <a href="{{url_for('delete_tag', tag_id=tag.id)}}"><button class="red-submit">Delete</button></a>
+  
+{% endblock content %}

@@ -136,25 +136,21 @@ def show_tag_detail(tag_id):
     tag = Tag.query.get_or_404(tag_id)
     
     # all posts matching a certain tag
-    tag_name = Tag.query.get_or_404(tag.name)
+    # !tag_name = Tag.query.get_or_404(tag.name)  [remove later]
 
    
     #get tag name for corresponding tag id
     tagged_posts = Post.created_tags
-    print(tag_name)
-    post_ids = []
+    #! print(tag_name) [remove later]
+    related_posts = []
     # expect something like: "fun"
     print(tagged_posts)  
     # expect something like: [<PostTag 1, fun>, <PostTag 3, fun>]
     
-    for item in tagged_posts:
-        items = item.split()
-        #expect ["<PostTag", "1,", "fun>"]
-        post_id = items[1]
-        if items[2][:-1] == tag_name:  #"fun>" becomes "fun"
-            post_ids.append(int(post_id))
-        #expect someting like post_ids = [1,3]
-    return render_template('tag-detail.html', tag_name=tag_name, post_ids=post_ids)
+    for index, item in enumerate(tagged_posts):
+        if item[index].id == tag_id:
+            related_posts.append(item)
+    return render_template('tag-detail.html', tag=tag, related_posts=related_posts)
 
 @app.route('/tags/new')
 def create_tag():
@@ -164,13 +160,18 @@ def create_tag():
 def add_tag_to_db():
     return redirect(url_for('list_tags'))
 
-@app.route('tags/<int:tag_id>/edit')
+@app.route('/tags/<int:tag_id>/edit')
 def edit_tag(tag_id):
     tag = Tag.query.get_or_404(tag_id)
     return render_template('edit-tag.html', tag=tag)
 
-@app.route('tags/<int:tag_id>/edit', methods=['POST'])
-def edit_tag(tag_id):
+@app.route('/tags/<int:tag_id>/edit', methods=['POST'])
+def post_tag_edits_to_db(tag_id):
+    # TODO 
+    tag = Tag.query.get_or_404(tag_id)
+    tag.name = request.form["tag_name"]
+    db.session.add(tag)
+    db.session.commit()
     return redirect(url_for('list_tags'))
 
 @app.route('/tags/<int:tag_id>/delete')

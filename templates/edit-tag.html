@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block header %}
+    <h1 class="main-header">Create a Tag</h1>
+{% endblock header %}
+{% block content %}
+    <form method="post">
+        <label for="new-tag-input">Name</label>
+        <input id="new-tag-input" type="text" name="tag_name" placeholder="Enter Tag Name">
+        <button type="submit" formaction="{{url_for('post_tag_edits_to_db', tag_id=tag.id)}}" class="green-submit">Add</button>
+    <a href="{{url_for('list_tags')}}"><button class="cancel-submit">Cancel</button></a>
+    </form>
+{% endblock content %}
