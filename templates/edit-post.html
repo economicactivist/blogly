@@ -9,6 +9,12 @@
         <br>
         <label for="post_content">Content</label>
         <textarea id="post_content" name="post_content" rows="4" cols="50">{{post.content}}</textarea>
+        {% for tag in tags %}
+        <input type="checkbox" name="tag" value="{{tag.name}}">
+        <!-- request.form.getlist('tag') -->
+        <!-- https://stackoverflow.com/questions/31859903/get-the-value-of-a-checkbox-in-flask/31860466 -->
+
+        {% endfor %}
         <button type="submit" formaction="{{url_for('post_blog_post_edits_to_db', post_id=post.id)}}" class="green-submit">Edit</button>
     <a href="{{url_for('show_user_detail', user_id=post.user_id)}}"><button class="cancel-submit">Cancel</button></a>
     </form>
