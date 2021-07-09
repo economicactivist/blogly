@@ -22,8 +22,8 @@ class User(db.Model):
     
     def fullname(self):
         return f'{self.first_name} {self.last_name}'
+    
 
-    created_tags = db.relationship('PostTag', secondary="post_tags", backref='users')
 
 class Post(db.Model):
     __tablename__="posts"
@@ -36,13 +36,12 @@ class Post(db.Model):
         nullable=False)
     user = db.relationship('User',
         backref=db.backref('users', lazy=True))
-    created_tags = db.relationship('PostTag', secondary="post_tags", backref='posts')
-
+    tags = db.relationship('Tag', secondary="post_tags", backref='posts',cascade="delete")
 class Tag(db.Model):
     __tablename__="tags"
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(50), nullable=False)
-
+    posts = db.relationship('Post', backref=db.backref('user'), cascade="all, delete")
 class PostTag(db.Model):
     __tablename__="post_tags"
     post_id = db.Column(db.Integer,
