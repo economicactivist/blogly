@@ -80,7 +80,8 @@ def delete_user(user_id):
 @app.route('/users/<int:user_id>/posts/new')
 def create_post(user_id):
     user = User.query.get_or_404(user_id)
-    return render_template('create-post.html', user=user)
+    tags = Tag.query.all()
+    return render_template('create-post.html', user=user, tags=tags)
 
 @app.route('/users/<int:user_id>/posts/new', methods=['POST'])
 def post_new_blog_post_to_db(user_id):

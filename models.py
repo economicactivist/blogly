@@ -34,14 +34,13 @@ class Post(db.Model):
         default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'),
         nullable=False)
-    # user = db.relationship('User',
-    #     backref=db.backref('users', lazy=True))
-    # tags = db.relationship('Tag', secondary="post_tags", backref='posts',cascade="delete")
+    user = db.relationship('User', backref=db.backref('users', lazy=True))
+    tags = db.relationship('Tag', secondary="post_tags", backref='posts',cascade="delete")
 class Tag(db.Model):
     __tablename__="tags"
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(50), nullable=False)
-    posts = db.relationship('Post', backref=db.backref('user'), cascade="all, delete")
+    posts = db.relationship('Post', backref=db.backref('tags'), secondary="post_tags")  #cascade="all, delete"
 class PostTag(db.Model):
     __tablename__="post_tags"
     post_id = db.Column(db.Integer,
