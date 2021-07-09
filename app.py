@@ -140,17 +140,9 @@ def show_tag_detail(tag_id):
 
    
     #get tag name for corresponding tag id
-    tagged_posts = Post.created_tags
-    #! print(tag_name) [remove later]
-    related_posts = []
-    # expect something like: "fun"
-    print(tagged_posts)  
-    # expect something like: [<PostTag 1, fun>, <PostTag 3, fun>]
+    tagged_posts = tag.posts
     
-    for index, item in enumerate(tagged_posts):
-        if item[index].id == tag_id:
-            related_posts.append(item)
-    return render_template('tag-detail.html', tag=tag, related_posts=related_posts)
+    return render_template('tag-detail.html', tag=tag, related_posts=tagged_posts)
 
 @app.route('/tags/new')
 def create_tag():
@@ -158,6 +150,10 @@ def create_tag():
 
 @app.route('/tags/new', methods=['POST'])
 def add_tag_to_db():
+    tag_name = request.form["tag_name"]
+    new_tag = Tag(name=tag_name)
+    db.session.add(new_tag)
+    db.session.commit()
     return redirect(url_for('list_tags'))
 
 @app.route('/tags/<int:tag_id>/edit')
@@ -167,7 +163,6 @@ def edit_tag(tag_id):
 
 @app.route('/tags/<int:tag_id>/edit', methods=['POST'])
 def post_tag_edits_to_db(tag_id):
-    # TODO 
     tag = Tag.query.get_or_404(tag_id)
     tag.name = request.form["tag_name"]
     db.session.add(tag)
