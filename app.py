@@ -90,6 +90,17 @@ def post_new_blog_post_to_db(user_id):
    
     post_title = request.form["post_title"]
     post_content = request.form["post_content"]
+    tags = request.form.getlist('tag') 
+    print()
+    print('********************')
+    print(tags)
+    print('********************')
+    print()
+    for tag in tags:
+        new_tag = Tag(name=tag)
+        db.session.add(new_tag)
+        
+    #!not sure what to do next
     new_post = Post(title=post_title, content=post_content, user_id=user.id)
 
     db.session.add(new_post)

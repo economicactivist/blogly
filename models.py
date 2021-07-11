@@ -35,7 +35,7 @@ class Post(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'),
         nullable=False)
     user = db.relationship('User', backref=db.backref('users', lazy=True))
-    tags = db.relationship('Tag', secondary="post_tags", backref='posts',cascade="delete")
+    
 class Tag(db.Model):
     __tablename__="tags"
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
